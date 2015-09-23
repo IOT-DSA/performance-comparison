@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DSA Browser Link</title>
+
+    <style>
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        .circle {
+            opacity: 0.5;
+            height: 50px;
+            width: 50px;
+            border-radius: 25px;
+            position: absolute;
+        }
+        .circle > div {
+            margin: auto;
+            text-align: center;
+            opacity: 1.0;
+            position: relative;
+            top: 15px;
+            font-weight: bold;
+        }
+        #dgcircle {
+            background-color: #1790fe;
+        }
+        #cbcircle {
+            background-color: #ffaaee;
+            left: 60px;
+        }
+    </style>
+</head>
+
+<body id="body">
+<div id="cbcircle" class="circle"><div>Crossbar</div></div>
+<div id="dgcircle" class="circle"><div>DSA</div></div>
+
+<script type="application/dart" src="example.dart"></script>
+<script type="application/javascript" src="packages/browser/dart.js"></script>
+<script>AUTOBAHN_DEBUG = false;</script>
+<script src="http://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min.jgz"></script>
+<script src="crossbar-example.js"></script>
+</body>
+</html>
