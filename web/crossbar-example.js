@@ -27,7 +27,7 @@ connection.onopen = function (session, details) {
     function on_updated (args, kwargs, details) {
         var pos = args[0];
         circle.style.left = pos.x + 'px';
-        circle.style.top = (pos.y - 10) + 'px';
+        circle.style.top = (pos.y + 10) + 'px';
     }
     session.subscribe(topic, on_updated).then(
         function (sub) {

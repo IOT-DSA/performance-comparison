@@ -30,7 +30,7 @@ class StorageExample {
 
   void bothUpdated(ValueUpdate update) {
     _circle.style.left = '${update.value['x']}px';
-    _circle.style.top = '${update.value['y'] + 10}px';
+    _circle.style.top = '${update.value['y'] - 10}px';
   }
 
   void mouseMoved(MouseEvent event) {
