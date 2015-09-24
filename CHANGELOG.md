@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.4
+
+- QOS updates and move server to port 80
+
 ## 0.4.3
 
 - Migrate crossbar to server.

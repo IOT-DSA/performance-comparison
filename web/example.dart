@@ -16,14 +16,14 @@ class MyExample {
 
   Future init() async {
     var brokerUrl = await BrowserUtils.fetchBrokerUrlFromPath('broker_url',
-        'http://performance.iot-dsa.org:8080/conn');
+        'http://performance.iot-dsa.org/conn');
     link = new LinkProvider(brokerUrl,
         'Browser-', isResponder: false);
 
     await link.connect();
 
     _req = await link.onRequesterReady;
-    _req.subscribe('/downstream/store/pos', bothUpdated);
+    _req.subscribe('/downstream/store/pos', bothUpdated, 3);
 
     _body.onMouseMove.listen(mouseMoved);
   }

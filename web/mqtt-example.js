@@ -28,6 +28,7 @@ function clientConnected() {
      var pos = {x : event.pageX, y : event.pageY};
      var message = new Paho.MQTT.Message(JSON.stringify(pos));
      message.destinationName = '/com.dglux.followme';
+     message.qos = 0;
      mqclient.send(message);
  }
 
