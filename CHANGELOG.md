@@ -4,6 +4,10 @@
 
 - QOS updates and move server to port 80
 
+## 0.4.6
+
+- Offset crossbar and dsa bubbles to give some spacial disparity
+
 ## 0.4.5
 
 - Update Crossbar to add event listener like other samples

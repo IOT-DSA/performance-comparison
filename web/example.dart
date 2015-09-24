@@ -3,13 +3,13 @@ import 'dart:async';
 
 import "package:dslink/browser.dart";
 
-class MyExample {
+class StorageExample {
   BodyElement _body;
   DivElement _circle;
   LinkProvider link;
   Requester _req;
 
-  MyExample() {
+  StorageExample() {
     _body = querySelector('body');
     _circle = querySelector('#dgcircle');
   }
@@ -30,7 +30,7 @@ class MyExample {
 
   void bothUpdated(ValueUpdate update) {
     _circle.style.left = '${update.value['x']}px';
-    _circle.style.top = '${update.value['y']}px';
+    _circle.style.top = '${update.value['y'] + 10}px';
   }
 
   void mouseMoved(MouseEvent event) {
@@ -40,6 +40,6 @@ class MyExample {
 }
 
 main() async {
-  var example = new MyExample();
-  example.init();
+  var se = new StorageExample();
+  se.init();
 }
