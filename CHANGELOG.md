@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+- Added MQTT sample
+
 ## 0.3.0
 
 - Added PubNub sample.
