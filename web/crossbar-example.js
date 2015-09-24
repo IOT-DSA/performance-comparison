@@ -1,6 +1,6 @@
 // the URL of the WAMP Router (Crossbar.io)
 //
-var wsuri = "ws://demo.crossbar.io:8080";
+var wsuri = "ws://performance.iot-dsa.org:8095/ws";
 
 // the WAMP connection to the Router
 //

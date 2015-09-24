@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.3
+
+- Migrate crossbar to server.
+
+## 0.4.2
+
+- Start migrating to the server
+- Bugfixes for MQTT sample.
+
 ## 0.4.0
 
 - Added MQTT sample
