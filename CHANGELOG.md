@@ -1,8 +1,8 @@
 # Changelog
 
-## 0.4.4
+## 0.4.7
 
-- QOS updates and move server to port 80
+- Add metrics to page
 
 ## 0.4.6
 

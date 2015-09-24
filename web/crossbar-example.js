@@ -1,6 +1,10 @@
 // the URL of the WAMP Router (Crossbar.io)
 //
 var wsuri = "ws://performance.iot-dsa.org:8095/ws";
+var cbtx = 0;
+var cbrx = 0;
+var cbtxspan = document.getElementById('cbmettx');
+var cbrxspan = document.getElementById('cbmetrx');
 
 // the WAMP connection to the Router
 //
@@ -28,6 +32,7 @@ connection.onopen = function (session, details) {
         var pos = args[0];
         circle.style.left = pos.x + 'px';
         circle.style.top = (pos.y + 10) + 'px';
+        cbrxspan.textContent = ++cbrx;
     }
     session.subscribe(topic, on_updated).then(
         function (sub) {
@@ -53,7 +58,7 @@ connection2.onopen = function(session, details) {
         var pos = {x : event.pageX, y : event.pageY};
         session.publish(topic, [pos], {}, {acknowledge: true}).then(
             function(pub) {
-
+                cbtxspan.textContent = ++cbtx;
             },
             function(err) {
                 console.log('pub error:', err);

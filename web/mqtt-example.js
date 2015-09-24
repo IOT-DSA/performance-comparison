@@ -1,4 +1,8 @@
 var mqcircle = document.getElementById('mqttcircle');
+var mqtx = 0;
+var mqrx = 0;
+var mqtxspan = document.getElementById('mqmettx');
+var mqrxspan = document.getElementById('mqmetrx');
 
 var mqclient = new Paho.MQTT.Client('performance.iot-dsa.org', 8091, 'followme-1' + new Date().getTime());
 mqclient.onMessageArrived = function(msg) {
@@ -7,6 +11,7 @@ mqclient.onMessageArrived = function(msg) {
     } catch (e) {
         console.log('error:', e);
     }
+    mqrxspan.textContent = ++mqrx;
     mqcircle.style.left = pos.x + 'px';
     mqcircle.style.top = pos.y + 'px';
 };
@@ -30,6 +35,7 @@ function clientConnected() {
      message.destinationName = '/com.dglux.followme';
      message.qos = 0;
      mqclient.send(message);
+     mqtxspan.textContent = ++mqtx;
  }
 
 mqclient.connect({onSuccess: clientConnected});

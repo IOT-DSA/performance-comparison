@@ -23,29 +23,81 @@
             top: 15px;
             font-weight: bold;
         }
-        #dgcircle {
+        /* DSA Specifics */
+        .dgcolor {
             background-color: #1790fe;
         }
-        #cbcircle {
+        #dgcircle {
+        }
+        /* Crossbar Specifics */
+        .cbcolor {
             background-color: #ffaaee;
+        }
+        #cbcircle {
             left: 60px;
         }
-        #pncircle {
+        /* PubNub Specifics */
+        .pncolor {
             background-color: burlywood;
+        }
+        #pncircle {
             left: 120px;
         }
-        #mqttcircle {
+
+        /* MQTT Specifics */
+        .mqcolor {
             background-color: #57ff59;
+        }
+        #mqttcircle {
             left: 180px;
+        }
+
+        #metrics {
+            opacity: 0.7;
+            float: right;
+            width: 200px;
+        }
+
+        section#metrics > article {
+            padding: 10px;
+        }
+        section#metrics > article > div {
+            margin-left: 10px;
+            font-size: 12px;
         }
     </style>
 </head>
 
 <body id="body">
-<div id="mqttcircle" class="circle"><div>MQTT</div></div>
-<div id="pncircle" class="circle"><div>PubNub</div></div>
-<div id="cbcircle" class="circle"><div>Crossbar</div></div>
-<div id="dgcircle" class="circle"><div>DSA</div></div>
+<div id="mqttcircle" class="circle mqcolor"><div>MQTT</div></div>
+<div id="pncircle" class="circle pncolor"><div>PubNub</div></div>
+<div id="cbcircle" class="circle cbcolor"><div>Crossbar</div></div>
+<div id="dgcircle" class="circle dgcolor"><div>DSA</div></div>
+
+<section id="metrics">
+    Message Count:
+    <article id="dgmet" class="dgcolor">
+        DSA
+        <div>Tx: <span id="dgmettx"></span></div>
+        <div>Rx: <span id="dgmetrx"></span></div>
+    </article>
+    <article id="mqmet" class="mqcolor">
+        MQTT
+        <div>Tx: <span id="mqmettx"></span></div>
+        <div>Rx: <span id="mqmetrx"></span></div>
+    </article>
+    <article id="pnmet" class="pncolor">
+        PubNub
+        <div>Tx: <span id="pnmettx"></span></div>
+        <div>Rx: <span id="pnmetrx"></span></div>
+    </article>
+    <article id="cbmet" class="cbcolor">
+        Crossbar
+        <div>Tx: <span id="cbmettx"></span></div>
+        <div>Rx: <span id="cbmetrx"></span></div>
+    </article>
+</section>
+
 <!-- Dart DSA Example -->
 <script type="application/dart" src="example.dart"></script>
 <script type="application/javascript" src="packages/browser/dart.js"></script>

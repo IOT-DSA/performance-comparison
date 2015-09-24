@@ -3,6 +3,11 @@ var pn = PUBNUB.init({
     subscribe_key: 'sub-c-2a0a5cb2-6228-11e5-bba9-02ee2ddab7fe'
 });
 
+var pnrx = 0;
+var pntx = 0;
+var pntxspan = document.getElementById('pnmettx');
+var pnrxspan = document.getElementById('pnmetrx');
+
 var pnCircle = document.getElementById('pncircle');
 var pnbody = document.querySelector('html');
 pnbody.addEventListener('mousemove', function(event) {
@@ -10,9 +15,11 @@ pnbody.addEventListener('mousemove', function(event) {
     pn.publish({channel: 'com.dglux.followme',
         message: pos
     });
+    pntxspan.textContent = ++pntx;
 });
 
 function onUpdated(data) {
+    pnrxspan.textContent = ++pnrx;
     pnCircle.style.left = data.x + 'px';
     pnCircle.style.top = data.y + 'px';
 }
