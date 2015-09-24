@@ -4,6 +4,14 @@
 
 - QOS updates and move server to port 80
 
+## 0.4.5
+
+- Update Crossbar to add event listener like other samples
+
+## 0.4.4
+
+- Update QOS default values for MQTT and DSA
+
 ## 0.4.3
 
 - Migrate crossbar to server.

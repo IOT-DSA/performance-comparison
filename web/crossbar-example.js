@@ -48,8 +48,8 @@ connection2.onclose = function (reason, details) {
 
 connection2.onopen = function(session, details) {
     // PUBLISH an event every second
-    var body = document.querySelector('html');
-    body.onmousemove = function(event) {
+    var body = document.querySelector('body');
+    body.addEventListener('mousemove', function(event) {
         var pos = {x : event.pageX, y : event.pageY};
         session.publish(topic, [pos], {}, {acknowledge: true}).then(
             function(pub) {
@@ -59,7 +59,7 @@ connection2.onopen = function(session, details) {
                 console.log('pub error:', err);
             }
         );
-    };
+    });
 
 };
 // now actually open the connection
