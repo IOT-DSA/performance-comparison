@@ -32,7 +32,7 @@ class StorageExample {
   Future init() async {
     print('Initializing');
     var brokerUrl = await BrowserUtils.fetchBrokerUrlFromPath('broker_url',
-        'http://performance.iot-dsa.org/conn');
+        'http://performance.iot-dsa.org:8080/conn');
     link = new LinkProvider(brokerUrl,
         'Browser-', isResponder: false);
 
