@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.1
+
+- Fix bug in PubNub sample not starting on new session.
+- Use a data store for DSA instead of storage link.
+
 ## 0.5.0
 
 - Use sessions now (via location hash). If no session is provided

@@ -9,12 +9,12 @@ var cbdtspan = document.getElementById('cbmetdt');
 
 var hash = window.location.hash;
 if(!hash) {
-    window.addEventListener('hashchange', start);
+    window.addEventListener('hashchange', startcb);
 } else {
-    start();
+    startcb();
 }
 
-function start() {
+function startcb() {
     hash = window.location.hash.substr(1);
 // the WAMP connection to the Router
 //

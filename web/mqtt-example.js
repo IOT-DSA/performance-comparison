@@ -7,12 +7,12 @@ var mqdtspan = document.getElementById('mqmetdt');
 var hash = window.location.hash;
 
 if(!hash) {
-    window.addEventListener('hashchange', start);
+    window.addEventListener('hashchange', startmq);
 } else {
-    start();
+    startmq();
 }
-function start() {
-    hash = hash.substr(1);
+function startmq() {
+    hash = window.location.hash.substr(1);
     var mqclient = new Paho.MQTT.Client('performance.iot-dsa.org', 8091, 'followme-1' + new Date().getTime());
 
     mqclient.onMessageArrived = function (msg) {

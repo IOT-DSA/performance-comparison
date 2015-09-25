@@ -16,8 +16,10 @@ class StorageExample {
   LinkProvider link;
   Requester _req;
   String hash;
+  String _node;
 
   StorageExample(this.hash) {
+    _node = '/data/follow/$hash';
     _body = querySelector('body');
     _circle = querySelector('#dgcircle');
     _txSpan = querySelector('#dgmettx');
@@ -35,16 +37,15 @@ class StorageExample {
         'Browser-', isResponder: false);
 
     await link.connect();
-    print('Connected');
     _req = await link.onRequesterReady;
-    var nd = await _req.getRemoteNode('/downstream/store');
-    if(!nd.children.keys.contains(hash)) {
-      var _ = await _req.invoke('/downstream/store/Create_Entry',
-          {r'name' : hash, r'type' : 'Map', r'editor' : 'none'})
-          .drain();
-      _ = await _req.set('/downstream/store/$hash', { 'x' : 0, 'y' : 0});
-    }
-    _req.subscribe('/downstream/store/$hash', bothUpdated, 3);
+//    var nd = await _req.getRemoteNode('/downstream/store');
+//    if(!nd.children.keys.contains(hash)) {
+//      var _ = await _req.invoke('/downstream/store/Create_Entry',
+//          {r'name' : hash, r'type' : 'Map', r'editor' : 'none'})
+//          .drain();
+//      _ = await _req.set('/downstream/store/$hash', { 'x' : 0, 'y' : 0});
+//    }
+    _req.subscribe(_node, bothUpdated, 3);
 
     _body.onMouseMove.listen(mouseMoved);
   }
@@ -58,7 +59,7 @@ class StorageExample {
 
   void mouseMoved(MouseEvent event) {
     var pos = {'x' : event.page.x, 'y': event.page.y };
-    _req.set('/downstream/store/$hash', pos);
+    _req.set(_node, pos);
     _txSpan.text = '${++_tx}';
     _dtSpan.text = '${_tx - _rx}';
   }

@@ -1,5 +1,3 @@
-
-
 var pnrx = 0;
 var pntx = 0;
 var pntxspan = document.getElementById('pnmettx');
@@ -11,13 +9,13 @@ var pnbody = document.querySelector('html');
 var hash = window.location.hash;
 
 if(!hash) {
-    window.addEventListener('hashchange', start);
+    window.addEventListener('hashchange', startpn);
 } else {
-    start();
+    startpn();
 }
 
-function start() {
-    hash = hash.substr(1);
+function startpn() {
+    hash = window.location.hash.substr(1);
 
     var pn = PUBNUB.init({
         publish_key: 'pub-c-85f4ff98-5adc-4c44-a915-90efb914f56e',
