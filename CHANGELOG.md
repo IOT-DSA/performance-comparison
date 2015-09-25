@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0
+
+- Use sessions now (via location hash). If no session is provided
+a new session is created automagically.
+
 ## 0.4.8
 
 - Added delta values to metrics
