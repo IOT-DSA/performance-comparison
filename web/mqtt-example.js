@@ -22,6 +22,10 @@ function startmq() {
             console.log('error:', e);
         }
         mqrxspan.textContent = ++mqrx;
+        if(mqrx > mqtx) {
+            mqtx = mqrx;
+            mqtxspan.textContent = mqtx;
+        }
         mqdtspan.textContent = (mqtx - mqrx);
         mqcircle.style.left = pos.x + 'px';
         mqcircle.style.top = pos.y + 'px';

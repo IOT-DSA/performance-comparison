@@ -54,6 +54,10 @@ class StorageExample {
     _circle.style.left = '${update.value['x']}px';
     _circle.style.top = '${update.value['y'] - 10}px';
     _rxSpan.text = '${++_rx}';
+    if(_rx > _tx) {
+      _tx = _rx;
+      _txSpan.text = '$_tx';
+    }
     _dtSpan.text = '${_tx - _rx}';
   }
 

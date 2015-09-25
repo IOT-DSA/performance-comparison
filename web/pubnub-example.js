@@ -34,6 +34,10 @@ function startpn() {
 
     function onUpdated(data) {
         pnrxspan.textContent = ++pnrx;
+        if(pnrx > pntx) {
+            pntx = pnrx;
+            pntxspan.textContent = pntx;
+        }
         pndtspan.textContent = (pntx - pnrx);
         pnCircle.style.left = data.x + 'px';
         pnCircle.style.top = data.y + 'px';

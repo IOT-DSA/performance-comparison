@@ -43,6 +43,10 @@ function startcb() {
             circle.style.left = pos.x + 'px';
             circle.style.top = (pos.y + 10) + 'px';
             cbrxspan.textContent = ++cbrx;
+            if(cbrx > cbtx) {
+                cbtx = cbrx;
+                cbtxspan.textContent = cbtx;
+            }
             cbdtspan.textContent = (cbtx - cbrx);
         }
 

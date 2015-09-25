@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.2
+
+- Balancing received data with transmitted if not currently transmitting.
+
 ## 0.5.1
 
 - Fix bug in PubNub sample not starting on new session.
