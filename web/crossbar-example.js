@@ -5,6 +5,7 @@ var cbtx = 0;
 var cbrx = 0;
 var cbtxspan = document.getElementById('cbmettx');
 var cbrxspan = document.getElementById('cbmetrx');
+var cbdtspan = document.getElementById('cbmetdt');
 
 // the WAMP connection to the Router
 //
@@ -33,6 +34,7 @@ connection.onopen = function (session, details) {
         circle.style.left = pos.x + 'px';
         circle.style.top = (pos.y + 10) + 'px';
         cbrxspan.textContent = ++cbrx;
+        cbdtspan.textContent = (cbtx - cbrx);
     }
     session.subscribe(topic, on_updated).then(
         function (sub) {
@@ -59,6 +61,7 @@ connection2.onopen = function(session, details) {
         session.publish(topic, [pos], {}, {acknowledge: true}).then(
             function(pub) {
                 cbtxspan.textContent = ++cbtx;
+                cbdtspan.textContent = (cbtx - cbrx);
             },
             function(err) {
                 console.log('pub error:', err);

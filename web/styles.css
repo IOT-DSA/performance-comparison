@@ -6,4 +6,63 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+}
+
+.circle {
+    opacity: 0.5;
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    position: absolute;
+}
+.circle > div {
+    margin: auto;
+    text-align: center;
+    opacity: 1.0;
+    position: relative;
+    top: 15px;
+    font-weight: bold;
+}
+/* DSA Specifics */
+.dgcolor {
+    background-color: #1790fe;
+}
+#dgcircle {
+}
+/* Crossbar Specifics */
+.cbcolor {
+    background-color: #ffaaee;
+}
+#cbcircle {
+    left: 60px;
+}
+/* PubNub Specifics */
+.pncolor {
+    background-color: burlywood;
+}
+#pncircle {
+    left: 120px;
+}
+
+/* MQTT Specifics */
+.mqcolor {
+    background-color: #57ff59;
+}
+#mqttcircle {
+    left: 180px;
+}
+
+#metrics {
+    opacity: 0.7;
+    float: right;
+    width: 200px;
+}
+
+section#metrics > article {
+    padding: 10px;
+}
+section#metrics > article > div {
+    margin-left: 10px;
+    font-size: 12px;
 }

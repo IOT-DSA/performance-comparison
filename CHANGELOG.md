@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.8
+
+- Added delta values to metrics
+
 ## 0.4.7
 
 - Add metrics to page

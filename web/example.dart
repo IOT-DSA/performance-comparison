@@ -8,6 +8,7 @@ class StorageExample {
   DivElement _circle;
   SpanElement _txSpan;
   SpanElement _rxSpan;
+  SpanElement _dtSpan;
   num _tx;
   num _rx;
   LinkProvider link;
@@ -18,6 +19,7 @@ class StorageExample {
     _circle = querySelector('#dgcircle');
     _txSpan = querySelector('#dgmettx');
     _rxSpan = querySelector('#dgmetrx');
+    _dtSpan = querySelector('#dgmetdt');
     _tx = 0;
     _rx = 0;
   }
@@ -40,12 +42,14 @@ class StorageExample {
     _circle.style.left = '${update.value['x']}px';
     _circle.style.top = '${update.value['y'] - 10}px';
     _rxSpan.text = '${++_rx}';
+    _dtSpan.text = '${_tx - _rx}';
   }
 
   void mouseMoved(MouseEvent event) {
     var pos = {'x' : event.page.x, 'y': event.page.y };
     _req.set('/downstream/store/pos', pos);
     _txSpan.text = '${++_tx}';
+    _dtSpan.text = '${_tx - _rx}';
   }
 }
 

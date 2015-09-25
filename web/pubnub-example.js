@@ -7,6 +7,7 @@ var pnrx = 0;
 var pntx = 0;
 var pntxspan = document.getElementById('pnmettx');
 var pnrxspan = document.getElementById('pnmetrx');
+var pndtspan = document.getElementById('pnmetdt');
 
 var pnCircle = document.getElementById('pncircle');
 var pnbody = document.querySelector('html');
@@ -16,10 +17,12 @@ pnbody.addEventListener('mousemove', function(event) {
         message: pos
     });
     pntxspan.textContent = ++pntx;
+    pndtspan.textContent = (pntx - pnrx);
 });
 
 function onUpdated(data) {
     pnrxspan.textContent = ++pnrx;
+    pndtspan.textContent = (pntx - pnrx);
     pnCircle.style.left = data.x + 'px';
     pnCircle.style.top = data.y + 'px';
 }

@@ -2,70 +2,8 @@
 <html>
 <head>
     <title>DSA Browser Link</title>
-
-    <style>
-        html, body {
-            height: 100%;
-            overflow: hidden;
-        }
-        .circle {
-            opacity: 0.5;
-            height: 50px;
-            width: 50px;
-            border-radius: 25px;
-            position: absolute;
-        }
-        .circle > div {
-            margin: auto;
-            text-align: center;
-            opacity: 1.0;
-            position: relative;
-            top: 15px;
-            font-weight: bold;
-        }
-        /* DSA Specifics */
-        .dgcolor {
-            background-color: #1790fe;
-        }
-        #dgcircle {
-        }
-        /* Crossbar Specifics */
-        .cbcolor {
-            background-color: #ffaaee;
-        }
-        #cbcircle {
-            left: 60px;
-        }
-        /* PubNub Specifics */
-        .pncolor {
-            background-color: burlywood;
-        }
-        #pncircle {
-            left: 120px;
-        }
-
-        /* MQTT Specifics */
-        .mqcolor {
-            background-color: #57ff59;
-        }
-        #mqttcircle {
-            left: 180px;
-        }
-
-        #metrics {
-            opacity: 0.7;
-            float: right;
-            width: 200px;
-        }
-
-        section#metrics > article {
-            padding: 10px;
-        }
-        section#metrics > article > div {
-            margin-left: 10px;
-            font-size: 12px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body id="body">
@@ -80,21 +18,25 @@
         DSA
         <div>Tx: <span id="dgmettx"></span></div>
         <div>Rx: <span id="dgmetrx"></span></div>
+        <div>Delta: <span id="dgmetdt"></span></div>
     </article>
     <article id="mqmet" class="mqcolor">
-        MQTT
+        Mosquitto (MQTT)
         <div>Tx: <span id="mqmettx"></span></div>
         <div>Rx: <span id="mqmetrx"></span></div>
+        <div>Delta: <span id="mqmetdt"></span></div>
     </article>
     <article id="pnmet" class="pncolor">
         PubNub
         <div>Tx: <span id="pnmettx"></span></div>
         <div>Rx: <span id="pnmetrx"></span></div>
+        <div>Delta: <span id="pnmetdt"></span></div>
     </article>
     <article id="cbmet" class="cbcolor">
-        Crossbar
+        Crossbar (WAMP)
         <div>Tx: <span id="cbmettx"></span></div>
         <div>Rx: <span id="cbmetrx"></span></div>
+        <div>Delta: <span id="cbmetdt"></span></div>
     </article>
 </section>
 

@@ -3,6 +3,7 @@ var mqtx = 0;
 var mqrx = 0;
 var mqtxspan = document.getElementById('mqmettx');
 var mqrxspan = document.getElementById('mqmetrx');
+var mqdtspan = document.getElementById('mqmetdt');
 
 var mqclient = new Paho.MQTT.Client('performance.iot-dsa.org', 8091, 'followme-1' + new Date().getTime());
 mqclient.onMessageArrived = function(msg) {
@@ -12,6 +13,7 @@ mqclient.onMessageArrived = function(msg) {
         console.log('error:', e);
     }
     mqrxspan.textContent = ++mqrx;
+    mqdtspan.textContent = (mqtx - mqrx);
     mqcircle.style.left = pos.x + 'px';
     mqcircle.style.top = pos.y + 'px';
 };
@@ -36,6 +38,7 @@ function clientConnected() {
      message.qos = 0;
      mqclient.send(message);
      mqtxspan.textContent = ++mqtx;
+     mqdtspan.textContent = (mqtx - mqrx);
  }
 
 mqclient.connect({onSuccess: clientConnected});
