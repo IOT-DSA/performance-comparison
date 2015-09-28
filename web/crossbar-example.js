@@ -73,14 +73,14 @@ function startcb() {
         body.addEventListener('mousemove', function (event) {
             var pos = {x: event.pageX, y: event.pageY};
             session.publish(topic, [pos], {}, {acknowledge: true}).then(
-                function (pub) {
-                    cbtxspan.textContent = ++cbtx;
-                    cbdtspan.textContent = (cbtx - cbrx);
+                function (pub) {                   
                 },
                 function (err) {
                     console.log('pub error:', err);
                 }
             );
+            cbtxspan.textContent = ++cbtx;
+            cbdtspan.textContent = (cbtx - cbrx);
         });
 
     };
