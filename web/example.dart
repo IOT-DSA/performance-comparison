@@ -37,8 +37,9 @@ class ManageSession {
     }
     se = new StorageExample(hash);
     BODY.on['trialready'].listen(prepTrials);
+    BODY.on['inittrials'].listen((_) { se.init(); });
     BODY.dispatchEvent(new CustomEvent('inittrials'));
-    se.init();
+    //se.init();
   }
 
   void prepTrials(CustomEvent e) {
