@@ -8,14 +8,17 @@ var CrossbarExample = (function() {
         this.wsuri = "ws://performance.iot-dsa.org:8095/ws";
         this.tx = 0;
         this.rx = 0;
+        this.lastMsgTime = 0;
         this.Elements = {};
         this.Elements.circle = document.getElementById('cbcircle');
         this.Elements.txSpan = document.getElementById('cbmettx');
         this.Elements.rxSpan = document.getElementById('cbmetrx');
         this.Elements.dtSpan = document.getElementById('cbmetdt');
+        this.Elements.mps = document.getElementById('cbmps');
         this.rxConnection = null;
         this.txConnection = null;
         this.ssid = '';
+        this.PER_SECOND = 1000;
 
         var hash = window.location.hash;
         if(!hash) {
@@ -44,6 +47,17 @@ var CrossbarExample = (function() {
                     cbx.Elements.txSpan.textContent = cbx.tx;
                 }
                 cbx.Elements.dtSpan.textContent = (cbx.tx - cbx.rx);
+
+                if(cbx.lastMsgTime === 0) {
+                    cbx.lastMsgTime = window.performance.now();
+                }
+
+                if(cbx.rx % 10 === 0) {
+                    var now = window.performance.now();
+                    var delta = now - cbx.lastMsgTime;
+                    cbx.lastMsgTime = now;
+                    cbx.Elements.mps.textContent = ((cbx.PER_SECOND / delta) * 10).toFixed(2);
+                }
             }
 
             session.subscribe(cbx.ssid, on_updated).then(

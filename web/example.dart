@@ -52,12 +52,15 @@ class ManageSession {
 
 /// DSA sample using data nodes to store values and retreive them.
 class StorageExample {
+  static const PER_SECOND = 1000.0;
   DivElement _circle;
   SpanElement _txSpan;
   SpanElement _rxSpan;
   SpanElement _dtSpan;
+  SpanElement _mpsSpan;
   num _tx;
   num _rx;
+  num _lastMessageTime;
   LinkProvider link;
   Requester _req;
   String hash;
@@ -69,8 +72,10 @@ class StorageExample {
     _txSpan = querySelector('#dgmettx');
     _rxSpan = querySelector('#dgmetrx');
     _dtSpan = querySelector('#dgmetdt');
+    _mpsSpan = querySelector('#dgmps');
     _tx = 0;
     _rx = 0;
+    _lastMessageTime = 0.0;
   }
 
   Future init() async {
@@ -101,6 +106,17 @@ class StorageExample {
       _txSpan.text = '$_tx';
     }
     _dtSpan.text = '${_tx - _rx}';
+
+    if(_lastMessageTime == 0.0) {
+      _lastMessageTime = window.performance.now();
+    }
+
+    if(_rx % 10 == 0){
+      var now = window.performance.now();
+      var delta = now - _lastMessageTime;
+      _lastMessageTime = now;
+      _mpsSpan.text = (PER_SECOND / delta * 10).toStringAsFixed(2);
+    }
   }
 
   void mouseMoved(MouseEvent event) {

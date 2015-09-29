@@ -7,13 +7,16 @@ var PNExample = (function() {
         pnx = this;
         this.rx = 0;
         this.tx = 0;
+        this.lastMsgTime = 0;
         this.Elements = {};
         this.Elements.circle = document.getElementById('pncircle');
         this.Elements.txSpan = document.getElementById('pnmettx');
         this.Elements.rxSpan = document.getElementById('pnmetrx');
         this.Elements.dtSpan = document.getElementById('pnmetdt');
+        this.Elements.mps = document.getElementById('pnmps');
         this.connection = null;
         this.ssid = '';
+        this.PER_SECOND = 1000;
 
         var hash = window.location.hash;
         if(!hash) {
@@ -32,6 +35,17 @@ var PNExample = (function() {
         pnx.Elements.dtSpan.textContent = (pnx.tx - pnx.rx);
         pnx.Elements.circle.style.left = data.x + 'px';
         pnx.Elements.circle.style.top = data.y + 'px';
+
+        if(pnx.lastMsgTime === 0) {
+            pnx.lastMsgTime = window.performance.now();
+        }
+
+        if(pnx.rx % 10 === 0) {
+            var now = window.performance.now();
+            var delta = now - pnx.lastMsgTime;
+            pnx.lastMsgTime = now;
+            pnx.Elements.mps.textContent = (pnx.PER_SECOND / delta * 10).toFixed(2);
+        }
     };
 
     PNExample.prototype.mouseMoved = function(event) {

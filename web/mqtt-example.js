@@ -10,10 +10,13 @@ var MQExample = (function() {
         this.Elements.txSpan = document.getElementById('mqmettx');
         this.Elements.rxSpan = document.getElementById('mqmetrx');
         this.Elements.dtSpan = document.getElementById('mqmetdt');
+        this.Elements.mps = document.getElementById('mqmps');
         this.rx = 0;
         this.tx = 0;
+        this.lastMessageTime = 0;
         this.ssid = '';
         this.connection = null;
+        this.PER_SECOND = 1000;
 
         var hash = window.location.hash;
         if(!hash) {
@@ -58,6 +61,17 @@ var MQExample = (function() {
         mqx.Elements.dtSpan.textContent = (mqx.tx - mqx.rx);
         mqx.Elements.circle.style.left = pos.x + 'px';
         mqx.Elements.circle.style.top = pos.y + 'px';
+
+        if(mqx.lastMessageTime === 0) {
+            mqx.lastMessageTime = window.performance.now();
+        }
+
+        if(mqx.rx % 10 === 0) {
+            var now = window.performance.now();
+            var delta = now - mqx.lastMsgTime;
+            mqx.lastMsgTime = now;
+            mqx.Elements.mps.textContent = ((mqx.PER_SECOND / delta) * 10).toFixed(2);
+        }
     };
 
     MQExample.prototype.init = function() {

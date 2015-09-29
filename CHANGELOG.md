@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0
+
+- Report messages received per second (averaged over 10 messages).
+
 ## 0.6.0
 
 * Trigger events so all examples have time to initialize first, then
