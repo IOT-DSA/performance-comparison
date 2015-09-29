@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0
+
+- Use start button to trigger loading and provide status.
+
 ## 0.7.1
 
 - Fix issue with streaming starting before all examples loaded
