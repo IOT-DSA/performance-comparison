@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0
+
+* Trigger events so all examples have time to initialize first, then
+they can all start sending events at the same time.
+
 ## 0.5.2
 
 - Balancing received data with transmitted if not currently transmitting.
