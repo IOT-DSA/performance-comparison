@@ -1,59 +1,83 @@
-var mqcircle = document.getElementById('mqttcircle');
-var mqtx = 0;
-var mqrx = 0;
-var mqtxspan = document.getElementById('mqmettx');
-var mqrxspan = document.getElementById('mqmetrx');
-var mqdtspan = document.getElementById('mqmetdt');
-var hash = window.location.hash;
+var MQ_BODY = document.querySelector('body');
 
-if(!hash) {
-    window.addEventListener('hashchange', startmq);
-} else {
-    startmq();
-}
-function startmq() {
-    hash = window.location.hash.substr(1);
-    var mqclient = new Paho.MQTT.Client('performance.iot-dsa.org', 8091, 'followme-1' + new Date().getTime());
+var MQExample = (function() {
 
-    mqclient.onMessageArrived = function (msg) {
+    var mqx;
+    function MQExample() {
+        mqx = this;
+        this.Elements = {};
+        this.Elements.circle = document.getElementById('mqttcircle');
+        this.Elements.txSpan = document.getElementById('mqmettx');
+        this.Elements.rxSpan = document.getElementById('mqmetrx');
+        this.Elements.dtSpan = document.getElementById('mqmetdt');
+        this.rx = 0;
+        this.tx = 0;
+        this.ssid = '';
+        this.connection = null;
+
+        var hash = window.location.hash;
+        if(!hash) {
+            window.addEventListener('hashchange', this.init);
+        } else {
+            this.init();
+        }
+    }
+
+    MQExample.prototype.mouseMoved = function(event) {
+        var pos = {x: event.pageX, y: event.pageY};
+        var message = new Paho.MQTT.Message(JSON.stringify(pos));
+        message.destinationName = '/com.dglux.followme' + mqx.ssid;
+        message.qos = 0;
+        mqx.connection.send(message);
+        mqx.Elements.txSpan.textContent = (mqx.tx += 1);
+        mqx.Elements.dtSpan.textContent = (mqx.tx - mqx.rx);
+    };
+
+    MQExample.prototype.clientConnected = function() {
+        mqx.connection.subscribe('/com.dglux.followme'+ mqx.ssid);
+
+        MQ_BODY.addEventListener('appready', function() {
+            console.log('AppReady Received from: mosquito');
+            MQ_BODY.addEventListener('mousemove', mqx.mouseMoved);
+        });
+        MQ_BODY.dispatchEvent(new CustomEvent('trialready', { detail: {trial: 'mosquito'}}));
+    };
+
+    MQExample.prototype.messageReceived = function(msg) {
+        var pos;
         try {
-            var pos = JSON.parse(msg.payloadString);
+            pos = JSON.parse(msg.payloadString);
         } catch (e) {
             console.log('error:', e);
         }
-        mqrxspan.textContent = ++mqrx;
-        if(mqrx > mqtx) {
-            mqtx = mqrx;
-            mqtxspan.textContent = mqtx;
+        mqx.Elements.rxSpan.textContent = (mqx.rx += 1);
+        if(mqx.rx > mqx.tx) {
+            mqx.tx = mqx.rx;
+            mqx.Elements.txSpan.textContent = mqx.tx;
         }
-        mqdtspan.textContent = (mqtx - mqrx);
-        mqcircle.style.left = pos.x + 'px';
-        mqcircle.style.top = pos.y + 'px';
-    };
-    mqclient.onConnectionLost = function onConnectionLost(responseObject) {
-        if (responseObject.errorCode !== 0) {
-            console.log("onConnectionLost:" + responseObject.errorMessage);
-            console.log(responseObject);
-            body.removeEventListener('mousemove', bodyListener);
-        }
+        mqx.Elements.dtSpan.textContent = (mqx.tx - mqx.rx);
+        mqx.Elements.circle.style.left = pos.x + 'px';
+        mqx.Elements.circle.style.top = pos.y + 'px';
     };
 
-    function clientConnected() {
-        mqclient.subscribe('/com.dglux.followme'+hash);
-        var body = document.querySelector('body');
+    MQExample.prototype.init = function() {
+        mqx.ssid = window.location.hash.substr(1);
 
-        body.addEventListener('mousemove', bodyListener);
-    }
+        mqx.connection = new Paho.MQTT.Client('performance.iot-dsa.org', 8091, 'followme-1' + new Date().getTime());
+        mqx.connection.onMessageArrived = mqx.messageReceived;
+        mqx.connection.onConnectionLost = function onConnectionLost(responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.log("onConnectionLost:" + responseObject.errorMessage);
+                console.log(responseObject);
+            }
+        };
 
-    function bodyListener(event) {
-        var pos = {x: event.pageX, y: event.pageY};
-        var message = new Paho.MQTT.Message(JSON.stringify(pos));
-        message.destinationName = '/com.dglux.followme' + hash;
-        message.qos = 0;
-        mqclient.send(message);
-        mqtxspan.textContent = ++mqtx;
-        mqdtspan.textContent = (mqtx - mqrx);
-    }
+        mqx.connection.connect({onSuccess: mqx.clientConnected});
+    };
 
-    mqclient.connect({onSuccess: clientConnected});
-}
+    return MQExample;
+})();
+
+MQ_BODY.addEventListener('inittrials', function () {
+    var mqExample = new MQExample();
+});

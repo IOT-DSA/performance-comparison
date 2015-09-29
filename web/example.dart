@@ -1,12 +1,57 @@
+library dsa.example;
+
 import "dart:html";
 import 'dart:async';
 import 'dart:math';
+import 'dart:convert';
 
 import "package:dslink/browser.dart";
 import "package:crypto/crypto.dart";
 
+/// BodyElement to dispatch and listen to events.
+final BodyElement BODY = querySelector('body');
+
+/// Class manages unique session IDs and checks that all
+/// samples are loaded before signaling the beginning of the tests
+class ManageSession {
+  static const TOTAL_TRIALS = 1;
+  final MAX_SIZE = 10000;
+  final LIST_SIZE = 10;
+  String _hash;
+  StorageExample se;
+
+  int _messagesReceived = 0;
+
+  ManageSession() {
+    var hash = window.location.hash;
+    if(hash.isEmpty) {
+      var list = new List<int>(LIST_SIZE);
+      var rnd = new Random(new DateTime.now().millisecond);
+      for(var i = 0; i < LIST_SIZE; i++) {
+        list[i] = rnd.nextInt(MAX_SIZE);
+      }
+      hash = CryptoUtils.bytesToHex(list);
+      window.location.hash = hash;
+    } else {
+      hash = Uri.encodeQueryComponent(hash.substring(1));
+    }
+    se = new StorageExample(hash);
+    BODY.on['trialready'].listen(prepTrials);
+    BODY.dispatchEvent(new CustomEvent('inittrials'));
+    se.init();
+  }
+
+  void prepTrials(CustomEvent e) {
+    _messagesReceived += 1;
+    print('Ready from: ${e.detail['trial']}');
+    if(_messagesReceived >= TOTAL_TRIALS) {
+      BODY.dispatchEvent(new CustomEvent('appready'));
+    }
+  }
+}
+
+/// DSA sample using data nodes to store values and retreive them.
 class StorageExample {
-  BodyElement _body;
   DivElement _circle;
   SpanElement _txSpan;
   SpanElement _rxSpan;
@@ -20,7 +65,6 @@ class StorageExample {
 
   StorageExample(this.hash) {
     _node = '/data/follow/$hash';
-    _body = querySelector('body');
     _circle = querySelector('#dgcircle');
     _txSpan = querySelector('#dgmettx');
     _rxSpan = querySelector('#dgmetrx');
@@ -30,7 +74,6 @@ class StorageExample {
   }
 
   Future init() async {
-    print('Initializing');
     var brokerUrl = await BrowserUtils.fetchBrokerUrlFromPath('broker_url',
         'http://performance.iot-dsa.org:8080/conn');
     link = new LinkProvider(brokerUrl,
@@ -38,16 +81,15 @@ class StorageExample {
 
     await link.connect();
     _req = await link.onRequesterReady;
-//    var nd = await _req.getRemoteNode('/downstream/store');
-//    if(!nd.children.keys.contains(hash)) {
-//      var _ = await _req.invoke('/downstream/store/Create_Entry',
-//          {r'name' : hash, r'type' : 'Map', r'editor' : 'none'})
-//          .drain();
-//      _ = await _req.set('/downstream/store/$hash', { 'x' : 0, 'y' : 0});
-//    }
     _req.subscribe(_node, bothUpdated, 3);
 
-    _body.onMouseMove.listen(mouseMoved);
+    // Listen for start event before sending messages
+    BODY.on['appready'].listen((_) {
+      print('AppReady Received from: DSA');
+      BODY.onMouseMove.listen(mouseMoved);
+    });
+    BODY.dispatchEvent(
+        new CustomEvent('trialready', detail: {'trial' : 'dsa'}));
   }
 
   void bothUpdated(ValueUpdate update) {
@@ -66,30 +108,6 @@ class StorageExample {
     _req.set(_node, pos);
     _txSpan.text = '${++_tx}';
     _dtSpan.text = '${_tx - _rx}';
-  }
-}
-
-class ManageSession {
-  final MAX_SIZE = 10000;
-  final LIST_SIZE = 10;
-  String _hash;
-  StorageExample se;
-
-  ManageSession() {
-    var hash = window.location.hash;
-    if(hash.isEmpty) {
-      var list = new List<int>(LIST_SIZE);
-      var rnd = new Random(new DateTime.now().millisecond);
-      for(var i = 0; i < LIST_SIZE; i++) {
-        list[i] = rnd.nextInt(MAX_SIZE);
-      }
-      hash = CryptoUtils.bytesToHex(list);
-      window.location.hash = hash;
-    } else {
-      hash = Uri.encodeQueryComponent(hash.substring(1));
-    }
-    se = new StorageExample(hash);
-    se.init();
   }
 }
 
