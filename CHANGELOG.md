@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.1
+
+- Fix to prevent empty hash
+
 ## 0.8.0
 
 - Use start button to trigger loading and provide status.

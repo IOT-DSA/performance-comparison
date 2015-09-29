@@ -36,7 +36,7 @@ class ManageSession {
       BODY.dispatchEvent(new CustomEvent('inittrials'));
     });
     _hash = window.location.hash;
-    if(_hash.isEmpty) {
+    if(_hash.isEmpty || _hash.substring(1).isEmpty) {
       var list = new List<int>(LIST_SIZE);
       var rnd = new Random(new DateTime.now().millisecond);
       for(var i = 0; i < LIST_SIZE; i++) {
