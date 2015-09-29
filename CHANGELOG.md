@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1
+
+- Fix issue with streaming starting before all examples loaded
+
 ## 0.7.0
 
 - Report messages received per second (averaged over 10 messages).
