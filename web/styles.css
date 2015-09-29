@@ -6,7 +6,9 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    font-size: 14pm;
     overflow: hidden;
+    text-align: center;
 }
 
 .circle {
@@ -57,6 +59,7 @@ html, body {
     opacity: 0.7;
     float: right;
     width: 200px;
+    text-align: left;
 }
 
 section#metrics > article {
@@ -65,4 +68,13 @@ section#metrics > article {
 section#metrics > article > div {
     margin-left: 10px;
     font-size: 12px;
+}
+
+#start {
+    font-size: 1.2rem;
+    margin: 0.5rem auto;
+    background-color: #0ad5ff;
+    width: 100px;
+    border: none;
+    border-radius: 4px;
 }

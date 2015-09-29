@@ -19,27 +19,35 @@ class ManageSession {
   final LIST_SIZE = 10;
   String _hash;
   StorageExample se;
+  ButtonElement _start;
 
   int _messagesReceived = 0;
 
   ManageSession() {
-    var hash = window.location.hash;
-    if(hash.isEmpty) {
+    _start = document.querySelector('#start');
+    _start.onClick.listen((_) {
+      _start..disabled = true
+        ..text = 'Loading...';
+      BODY.on['trialready'].listen(prepTrials);
+      BODY.on['inittrials'].listen((event) {
+        se = new StorageExample(_hash);
+        se.init();
+      });
+      BODY.dispatchEvent(new CustomEvent('inittrials'));
+    });
+    _hash = window.location.hash;
+    if(_hash.isEmpty) {
       var list = new List<int>(LIST_SIZE);
       var rnd = new Random(new DateTime.now().millisecond);
       for(var i = 0; i < LIST_SIZE; i++) {
         list[i] = rnd.nextInt(MAX_SIZE);
       }
-      hash = CryptoUtils.bytesToHex(list);
-      window.location.hash = hash;
+      _hash = CryptoUtils.bytesToHex(list);
+      window.location.hash = _hash;
     } else {
-      hash = Uri.encodeQueryComponent(hash.substring(1));
+      _hash = Uri.encodeQueryComponent(_hash.substring(1));
     }
-    se = new StorageExample(hash);
-    BODY.on['trialready'].listen(prepTrials);
-    BODY.on['inittrials'].listen((_) { se.init(); });
-    BODY.dispatchEvent(new CustomEvent('inittrials'));
-    //se.init();
+
   }
 
   void prepTrials(CustomEvent e) {
@@ -47,6 +55,7 @@ class ManageSession {
     print('Ready from: ${e.detail['trial']}');
     if(_messagesReceived >= TOTAL_TRIALS) {
       BODY.dispatchEvent(new CustomEvent('appready'));
+      _start.text = 'Running';
     }
   }
 }
