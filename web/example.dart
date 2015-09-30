@@ -13,7 +13,7 @@ final BodyElement BODY = querySelector('body');
 /// Class manages unique session IDs and checks that all
 /// samples are loaded before signaling the beginning of the tests
 class ManageSession {
-  static const TOTAL_TRIALS = 4;
+  static const TOTAL_TRIALS = 5;
   final MAX_SIZE = 10000;
   final LIST_SIZE = 10;
   String _hash;

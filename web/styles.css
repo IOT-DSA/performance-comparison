@@ -16,6 +16,8 @@ html, body {
     height: 50px;
     width: 50px;
     border-radius: 25px;
+    border-width: 1px;
+    border-style: solid;
     position: absolute;
 }
 .circle > div {
@@ -29,12 +31,14 @@ html, body {
 /* DSA Specifics */
 .dgcolor {
     background-color: #1790fe;
+    border-color: #103bfe;
 }
 #dgcircle {
 }
 /* Crossbar Specifics */
 .cbcolor {
     background-color: #ffaaee;
+    border-color: #ff56c0;
 }
 #cbcircle {
     left: 60px;
@@ -42,17 +46,28 @@ html, body {
 /* PubNub Specifics */
 .pncolor {
     background-color: burlywood;
+    border-color: #dea75e;
 }
 #pncircle {
     left: 120px;
 }
 
-/* MQTT Specifics */
+/* Mosquitto Specifics */
 .mqcolor {
-    background-color: #57ff59;
+    background-color: #7bff7b;
+    border-color: #08ff08;
 }
 #mqttcircle {
     left: 180px;
+}
+
+/* HiveMQ Specifics */
+.hvcolor {
+    background-color: #ffda70;
+    border-color: #ffbd34;
+}
+#hvcircle {
+    left: 240px;
 }
 
 #metrics {

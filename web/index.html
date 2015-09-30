@@ -9,6 +9,7 @@
 <body id="body">
 <button id="start">Start</button>
 
+<div id="hvcircle" class="circle hvcolor"><div>HiveMQ</div></div>
 <div id="mqttcircle" class="circle mqcolor"><div>MQTT</div></div>
 <div id="pncircle" class="circle pncolor"><div>PubNub</div></div>
 <div id="cbcircle" class="circle cbcolor"><div>Crossbar</div></div>
@@ -29,6 +30,13 @@
         <div>Rx: <span id="dgmetrx"></span></div>
         <div>Delta: <span id="dgmetdt"></span></div>
         <div>MPS: <span id="dgmps"></span></div>
+    </article>
+    <article id="hvmet" class="hvcolor">
+        HiveMQ (MQTT)
+        <div>Tx: <span id="hvmettx"></span></div>
+        <div>Rx: <span id="hvmetrx"></span></div>
+        <div>Delta: <span id="hvmetdt"></span></div>
+        <div>MPS: <span id="hvmps"></span></div>
     </article>
     <article id="mqmet" class="mqcolor">
         Mosquitto (MQTT)
@@ -58,6 +66,10 @@
 <script src="pubnub-example.js"></script>
 <!-- Javascript mqtt Example -->
 <script src="mqttws31.js"></script> <!-- library file -->
+<!-- Mosquitto Example -->
 <script src="mosquitto-example.js"></script>
+<!-- HiveMQ Example -->
+<script src="hive-example.js"></script>
+
 </body>
 </html>
