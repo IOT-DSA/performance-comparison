@@ -1,9 +1,9 @@
 var MQ_BODY = document.querySelector('body');
 
-var MQExample = (function() {
+var MosquittoExample = (function() {
 
     var mqx;
-    function MQExample() {
+    function MosquittoExample() {
         mqx = this;
         this.Elements = {};
         this.Elements.circle = document.getElementById('mqttcircle');
@@ -26,7 +26,7 @@ var MQExample = (function() {
         }
     }
 
-    MQExample.prototype.mouseMoved = function(event) {
+    MosquittoExample.prototype.mouseMoved = function(event) {
         var pos = {x: event.pageX, y: event.pageY};
         var message = new Paho.MQTT.Message(JSON.stringify(pos));
         message.destinationName = '/com.dglux.followme' + mqx.ssid;
@@ -36,13 +36,13 @@ var MQExample = (function() {
         mqx.Elements.dtSpan.textContent = (mqx.tx - mqx.rx);
     };
 
-    MQExample.prototype.messageCount = function() {
+    MosquittoExample.prototype.messageCount = function() {
         var delta = mqx.rx - mqx.lastMsgTime;
         mqx.lastMsgTime = mqx.rx;
         mqx.Elements.mps.textContent = (delta / 5);
     };
 
-    MQExample.prototype.clientConnected = function() {
+    MosquittoExample.prototype.clientConnected = function() {
         mqx.connection.subscribe('/com.dglux.followme'+ mqx.ssid);
 
         MQ_BODY.addEventListener('appready', function() {
@@ -53,7 +53,7 @@ var MQExample = (function() {
         MQ_BODY.dispatchEvent(new CustomEvent('trialready', { detail: {trial: 'mosquito'}}));
     };
 
-    MQExample.prototype.messageReceived = function(msg) {
+    MosquittoExample.prototype.messageReceived = function(msg) {
         var pos;
         try {
             pos = JSON.parse(msg.payloadString);
@@ -81,7 +81,7 @@ var MQExample = (function() {
         //}
     };
 
-    MQExample.prototype.init = function() {
+    MosquittoExample.prototype.init = function() {
         mqx.ssid = window.location.hash.substr(1);
 
         mqx.connection = new Paho.MQTT.Client('performance.iot-dsa.org', 8091, 'followme-1' + new Date().getTime());
@@ -96,9 +96,9 @@ var MQExample = (function() {
         mqx.connection.connect({onSuccess: mqx.clientConnected});
     };
 
-    return MQExample;
+    return MosquittoExample;
 })();
 
 MQ_BODY.addEventListener('inittrials', function () {
-    var mqExample = new MQExample();
+    var msExample = new MosquittoExample();
 });
