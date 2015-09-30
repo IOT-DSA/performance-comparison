@@ -13,7 +13,7 @@ var MQExample = (function() {
         this.Elements.mps = document.getElementById('mqmps');
         this.rx = 0;
         this.tx = 0;
-        this.lastMessageTime = 0;
+        this.lastMsgTime = 0;
         this.ssid = '';
         this.connection = null;
         this.PER_SECOND = 1000;
@@ -36,11 +36,18 @@ var MQExample = (function() {
         mqx.Elements.dtSpan.textContent = (mqx.tx - mqx.rx);
     };
 
+    MQExample.prototype.messageCount = function() {
+        var delta = mqx.rx - mqx.lastMsgTime;
+        mqx.lastMsgTime = mqx.rx;
+        mqx.Elements.mps.textContent = (delta / 5);
+    };
+
     MQExample.prototype.clientConnected = function() {
         mqx.connection.subscribe('/com.dglux.followme'+ mqx.ssid);
 
         MQ_BODY.addEventListener('appready', function() {
             console.log('AppReady Received from: mosquito');
+            window.setInterval(mqx.messageCount, 5000);
             MQ_BODY.addEventListener('mousemove', mqx.mouseMoved);
         });
         MQ_BODY.dispatchEvent(new CustomEvent('trialready', { detail: {trial: 'mosquito'}}));
@@ -62,16 +69,16 @@ var MQExample = (function() {
         mqx.Elements.circle.style.left = pos.x + 'px';
         mqx.Elements.circle.style.top = pos.y + 'px';
 
-        if(mqx.lastMessageTime === 0) {
-            mqx.lastMessageTime = window.performance.now();
-        }
-
-        if(mqx.rx % 10 === 0) {
-            var now = window.performance.now();
-            var delta = now - mqx.lastMsgTime;
-            mqx.lastMsgTime = now;
-            mqx.Elements.mps.textContent = ((mqx.PER_SECOND / delta) * 10).toFixed(2);
-        }
+        //if(mqx.lastMessageTime === 0) {
+        //    mqx.lastMessageTime = window.performance.now();
+        //}
+        //
+        //if(mqx.rx % 10 === 0) {
+        //    var now = window.performance.now();
+        //    var delta = now - mqx.lastMsgTime;
+        //    mqx.lastMsgTime = now;
+        //    mqx.Elements.mps.textContent = ((mqx.PER_SECOND / delta) * 10).toFixed(2);
+        //}
     };
 
     MQExample.prototype.init = function() {

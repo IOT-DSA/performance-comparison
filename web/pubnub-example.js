@@ -36,16 +36,16 @@ var PNExample = (function() {
         pnx.Elements.circle.style.left = data.x + 'px';
         pnx.Elements.circle.style.top = data.y + 'px';
 
-        if(pnx.lastMsgTime === 0) {
-            pnx.lastMsgTime = window.performance.now();
-        }
-
-        if(pnx.rx % 10 === 0) {
-            var now = window.performance.now();
-            var delta = now - pnx.lastMsgTime;
-            pnx.lastMsgTime = now;
-            pnx.Elements.mps.textContent = (pnx.PER_SECOND / delta * 10).toFixed(2);
-        }
+        //if(pnx.lastMsgTime === 0) {
+        //    pnx.lastMsgTime = window.performance.now();
+        //}
+        //
+        //if(pnx.rx % 10 === 0) {
+        //    var now = window.performance.now();
+        //    var delta = now - pnx.lastMsgTime;
+        //    pnx.lastMsgTime = now;
+        //    pnx.Elements.mps.textContent = (pnx.PER_SECOND / delta * 10).toFixed(2);
+        //}
     };
 
     PNExample.prototype.mouseMoved = function(event) {
@@ -57,6 +57,12 @@ var PNExample = (function() {
         pnx.Elements.txSpan.textContent = (pnx.tx += 1);
         pnx.Elements.dtSpan.textContent = (pnx.tx - pnx.rx);
     };
+
+    PNExample.prototype.messageCount = function() {
+        var delta = pnx.rx - pnx.lastMsgTime;
+        pnx.lastMsgTime = pnx.rx;
+        pnx.Elements.mps.textContent = (delta / 5);
+    }
 
     PNExample.prototype.init = function() {
         pnx.ssid = window.location.hash.substr(1);
@@ -71,6 +77,7 @@ var PNExample = (function() {
         });
         PN_BODY.addEventListener('appready', function() {
             console.log('AppReady Received from: PubNub');
+            window.setInterval(pnx.messageCount, 5000);
             PN_BODY.addEventListener('mousemove', pnx.mouseMoved);
         });
         PN_BODY.dispatchEvent(new CustomEvent('trialready', { detail: {trial: 'pubnub'}}));

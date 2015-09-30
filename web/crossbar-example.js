@@ -48,16 +48,16 @@ var CrossbarExample = (function() {
                 }
                 cbx.Elements.dtSpan.textContent = (cbx.tx - cbx.rx);
 
-                if(cbx.lastMsgTime === 0) {
-                    cbx.lastMsgTime = window.performance.now();
-                }
-
-                if(cbx.rx % 10 === 0) {
-                    var now = window.performance.now();
-                    var delta = now - cbx.lastMsgTime;
-                    cbx.lastMsgTime = now;
-                    cbx.Elements.mps.textContent = ((cbx.PER_SECOND / delta) * 10).toFixed(2);
-                }
+                //if(cbx.lastMsgTime === 0) {
+                //    cbx.lastMsgTime = window.performance.now();
+                //}
+                //
+                //if(cbx.rx % 10 === 0) {
+                //    var now = window.performance.now();
+                //    var delta = now - cbx.lastMsgTime;
+                //    cbx.lastMsgTime = now;
+                //    cbx.Elements.mps.textContent = ((cbx.PER_SECOND / delta) * 10).toFixed(2);
+                //}
             }
 
             session.subscribe(cbx.ssid, on_updated).then(
@@ -82,9 +82,15 @@ var CrossbarExample = (function() {
                 cbx.Elements.txSpan.textContent = (cbx.tx += 1);
                 cbx.Elements.dtSpan.textContent = (cbx.tx - cbx.rx);
             }
+            function messageCount() {
+                var delta = cbx.rx - cbx.lastMsgTime;
+                cbx.lastMsgTime = cbx.rx;
+                cbx.Elements.mps.textContent = (delta / 5);
+            }
             CB_BODY.addEventListener('appready', function() {
                 console.log('AppReady Received from: Crossbar');
                 CB_BODY.addEventListener('mousemove', mouseMoved);
+                window.setInterval(messageCount, 5000);
             });
 
             CB_BODY.dispatchEvent(new CustomEvent('trialready', { detail: {trial: 'crossbar'}}));

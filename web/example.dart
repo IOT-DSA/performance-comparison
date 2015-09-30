@@ -3,7 +3,6 @@ library dsa.example;
 import "dart:html";
 import 'dart:async';
 import 'dart:math';
-import 'dart:convert';
 
 import "package:dslink/browser.dart";
 import "package:crypto/crypto.dart";
@@ -47,7 +46,6 @@ class ManageSession {
     } else {
       _hash = Uri.encodeQueryComponent(_hash.substring(1));
     }
-
   }
 
   void prepTrials(CustomEvent e) {
@@ -63,6 +61,7 @@ class ManageSession {
 /// DSA sample using data nodes to store values and retreive them.
 class StorageExample {
   static const PER_SECOND = 1000.0;
+  static const TIME_TO_COUNT = const Duration(seconds: 5);
   DivElement _circle;
   SpanElement _txSpan;
   SpanElement _rxSpan;
@@ -75,6 +74,7 @@ class StorageExample {
   Requester _req;
   String hash;
   String _node;
+  Timer _msgTimer;
 
   StorageExample(this.hash) {
     _node = '/data/follow/$hash';
@@ -101,10 +101,17 @@ class StorageExample {
     // Listen for start event before sending messages
     BODY.on['appready'].listen((_) {
       print('AppReady Received from: DSA');
+      _msgTimer = new Timer.periodic(TIME_TO_COUNT, countMessages);
       BODY.onMouseMove.listen(mouseMoved);
     });
     BODY.dispatchEvent(
         new CustomEvent('trialready', detail: {'trial' : 'dsa'}));
+  }
+
+  void countMessages(Timer _) {
+    var delta = _rx - _lastMessageTime;
+    _lastMessageTime = _rx;
+    _mpsSpan.text = '${delta / 5}';
   }
 
   void bothUpdated(ValueUpdate update) {
@@ -117,16 +124,16 @@ class StorageExample {
     }
     _dtSpan.text = '${_tx - _rx}';
 
-    if(_lastMessageTime == 0.0) {
-      _lastMessageTime = window.performance.now();
-    }
+//    if(_lastMessageTime == 0.0) {
+//      _lastMessageTime = window.performance.now();
+//    }
 
-    if(_rx % 10 == 0){
-      var now = window.performance.now();
-      var delta = now - _lastMessageTime;
-      _lastMessageTime = now;
-      _mpsSpan.text = (PER_SECOND / delta * 10).toStringAsFixed(2);
-    }
+//    if(_rx % 10 == 0){
+//      var now = window.performance.now();
+//      var delta = now - _lastMessageTime;
+//      _lastMessageTime = now;
+//      _mpsSpan.text = (PER_SECOND / delta * 10).toStringAsFixed(2);
+//    }
   }
 
   void mouseMoved(MouseEvent event) {

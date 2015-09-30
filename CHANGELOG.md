@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.2
+
+- Convert MPS calculation to be over duration than between messages
+
 ## 0.8.1
 
 - Fix to prevent empty hash
