@@ -10,6 +10,7 @@
 <button id="start">Start</button>
 
 <div id="hvcircle" class="circle hvcolor"><div>HiveMQ</div></div>
+<div id="kfcircle" class="circle kfcolor"><div>Kafka</div></div>
 <div id="mqttcircle" class="circle mqcolor"><div>MQTT</div></div>
 <div id="pncircle" class="circle pncolor"><div>PubNub</div></div>
 <div id="cbcircle" class="circle cbcolor"><div>Crossbar</div></div>
@@ -37,6 +38,13 @@
         <div>Rx: <span id="hvmetrx"></span></div>
         <div>Delta: <span id="hvmetdt"></span></div>
         <div>MPS: <span id="hvmps"></span></div>
+    </article>
+    <article id="kfmet" class="kfcolor">
+        Kafka
+        <div>Tx: <span id="kfmettx"></span></div>
+        <div>Rx: <span id="kfmetrx"></span></div>
+        <div>Delta: <span id="kfmetdt"></span></div>
+        <div>MPS: <span id="kfmps"></span></div>
     </article>
     <article id="mqmet" class="mqcolor">
         Mosquitto (MQTT)
@@ -70,6 +78,8 @@
 <script src="mosquitto-example.js"></script>
 <!-- HiveMQ Example -->
 <script src="hive-example.js"></script>
+<!-- Kafka Example -->
+<script src="kafka-example.js"></script>
 
 </body>
 </html>

@@ -13,7 +13,7 @@ final BodyElement BODY = querySelector('body');
 /// Class manages unique session IDs and checks that all
 /// samples are loaded before signaling the beginning of the tests
 class ManageSession {
-  static const TOTAL_TRIALS = 5;
+  static const TOTAL_TRIALS = 6;
   final MAX_SIZE = 10000;
   final LIST_SIZE = 10;
   String _hash;
@@ -116,7 +116,7 @@ class StorageExample {
 
   void bothUpdated(ValueUpdate update) {
     _circle.style.left = '${(update.value as Map)['x']}px';
-    _circle.style.top = '${(update.value as Map)['y'] - 10}px';
+    _circle.style.top = '${(update.value as Map)['y'] - 30}px';
     _rxSpan.text = '${++_rx}';
     if(_rx > _tx) {
       _tx = _rx;
