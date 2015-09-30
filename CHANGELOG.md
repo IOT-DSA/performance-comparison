@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.4
+
+- Added Kafka Example
+
 ## 0.8.3
 
 - Add HiveMQ Example
