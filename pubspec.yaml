@@ -5,14 +5,13 @@ author: Matthew Butler <butler.matthew@gmail.com>
 homepage: http://butlermatt.me
 
 environment:
-  sdk: '>=1.0.0 <2.0.0'
+  sdk: '>=1.9.0 <2.0.0'
 
 dependencies:
   browser: '>=0.10.0 <0.11.0'
   dart_to_js_script_rewriter: '^0.1.0'
   crypto: '^0.9.1'
-  dslink:
-    git: git://github.com/IOT-DSA/sdk-dslink-dart.git
+  dslink: '^0.5.1'
 
 transformers:
 - dart_to_js_script_rewriter
